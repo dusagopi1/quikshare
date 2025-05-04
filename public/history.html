@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ride History - RideShare</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="history.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand">RideShare</div>
+    <div class="nav-links">
+      <a href="homepage.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+      <button id="logoutBtn" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="page-title">Your Ride History</h1>
+    
+    <div class="history-tabs">
+      <button class="tab-button active" data-tab="hosted">Hosted Rides</button>
+      <button class="tab-button" data-tab="joined">Joined Rides</button>
+    </div>
+
+    <div id="hostedHistory" class="history-content active">
+      <div class="loading-spinner" id="hostedLoadingSpinner">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>Loading hosted rides...</span>
+      </div>
+      <div class="no-rides-message hidden" id="noHostedRides">
+        <i class="fas fa-info-circle"></i>
+        <p>You haven't hosted any rides yet.</p>
+      </div>
+    </div>
+
+    <div id="joinedHistory" class="history-content">
+      <div class="loading-spinner" id="joinedLoadingSpinner">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>Loading joined rides...</span>
+      </div>
+      <div class="no-rides-message hidden" id="noJoinedRides">
+        <i class="fas fa-info-circle"></i>
+        <p>You haven't joined any rides yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="history.js"></script>
+</body>
+</html>

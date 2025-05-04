@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ride Sharing Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Link to CSS -->
+  <link rel="stylesheet" href="homepage.css">
+  <link rel="stylesheet" href="host-ride.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-user">
+      <i class="fas fa-user"></i>
+      <span id="userFirstName">User</span>
+    </div>
+    <div class="nav-actions">
+      <button id="historyBtn" class="nav-button">
+        <i class="fas fa-history"></i>
+        <span>History</span>
+      </button>
+      <button id="notificationsBtn" class="nav-button">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge">3</span>
+      </button>
+      <button id="logoutBtn" class="nav-button">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </button>
+      <button id="editBtn" class="nav-button">
+        <i class="fas"></i>
+        <span>edit</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Notifications Panel -->
+  <div id="notificationsPanel" class="notifications-panel hidden">
+    <div class="notification-item">
+      <i class="fas fa-car text-primary"></i>
+      <p>New ride request from John to Airport</p>
+    </div>
+    <div class="notification-item">
+      <i class="fas fa-check-circle text-success"></i>
+      <p>Your ride to Downtown was completed</p>
+    </div>
+    <div class="notification-item">
+      <i class="fas fa-info-circle text-info"></i>
+      <p>Upcoming ride in 2 hours</p>
+    </div>
+  </div>
+
+  <!-- History Panel -->
+  <div id="historyPanel" class="history-panel hidden">
+    <div class="history-tabs">
+      <button class="tab-button active" data-tab="shared">Shared Rides</button>
+      <button class="tab-button" data-tab="joined">Joined Rides</button>
+    </div>
+    <div id="sharedHistory" class="history-content active">
+      <div class="history-item">
+        <i class="fas fa-car"></i>
+        <div class="ride-details">
+         
+        </div>
+      </div>
+    </div>
+    <div id="joinedHistory" class="history-content">
+      <div class="history-item">
+        <i class="fas fa-car"></i>
+        <div class="ride-details">
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <h1>Welcome to Ride Share</h1>
+
+    <div>
+      <button id="hostBtn" class="button button-host">
+        🚀 Host a Ride
+      </button>
+
+      <button id="joinBtn" class="button button-join">
+        🙋 Join a Ride
+      </button>
+    </div>
+  </div>
+
+  <!-- Link to JS -->
+  <script src="homepage.js"></script>
+</body>
+</html>

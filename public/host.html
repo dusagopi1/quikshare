@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RideShare | Home</title>
+    <link rel="stylesheet" href="host.css">
+</head>
+<body>
+    <div class="container">
+        <!-- After login -->
+        <div class="dashboard">
+            <h1>Welcome, User!</h1>
+            <div class="options">
+                <button id="hostRideBtn" class="btn btn-primary">Host a Ride</button>
+                <button id="joinRideBtn" class="btn btn-secondary">Join a Ride</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Host Ride Modal (Hidden by default) -->
+    <div id="hostRideModal" class="modal">
+        <div class="modal-content">
+            <!-- Content loaded from host-ride.js -->
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+   
+    <!-- Location tracking dependencies -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- Main script -->
+    <script src="host.js" type="module"></script>
+</body>
+</html>

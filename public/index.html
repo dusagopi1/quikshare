@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapido - Login & Register</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="forms-container">
+            <div class="form-box login">
+                <div class="form-content">
+                    <h2>Welcome Back!</h2>
+                    <p>Login to your account</p>
+                    <form id="loginForm">
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn">Login</button>
+                    </form>
+                    <p class="toggle-form">Don't have an account? <a href="#" id="showRegister">Register</a></p>
+                </div>
+            </div>
+
+            <div class="form-box register">
+                <div class="form-content">
+                    <h2>Create Account</h2>
+                    <p>Join the Rapido community</p>
+                    <form id="registerForm">
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" placeholder="First Name" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" placeholder="Last Name" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-mobile-alt"></i>
+                            <input type="tel" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-home"></i>
+                            <input type="text" placeholder="Address" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn">Register</button>
+                    </form>
+                    <p class="toggle-form">Already have an account? <a href="#" id="showLogin">Login</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-container">
+            <h2>Welcome to Rapido</h2>
+            <p>Your trusted ride-hailing partner</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

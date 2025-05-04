@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapido - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard">
+            <h1>Dashboard</h1>
+            <div id="map" style="height: 400px; width: 100%; margin-bottom: 20px;"></div>
+            <div class="action-buttons">
+                <button id="hostRideBtn" class="btn btn-primary">
+                    <i class="fas fa-car"></i> Host a Ride
+                </button>
+                <button id="joinRideBtn" class="btn btn-secondary">
+                    <i class="fas fa-user-plus"></i> Join a Ride
+                </button>
+            </div>
+        </div>
+
+        <!-- Host Ride Modal -->
+        <div id="hostRideModal" class="modal">
+            <!-- Modal content will be dynamically loaded -->
+        </div>
+    </div>
+
+    <script type="module" src="host.js"></script>
+    <script type="module" src="location-tracker.js"></script>
+    <script type="module">
+        import { initializeMap, startLocationSharing, stopLocationSharing } from './location-tracker.js';
+        
+        // Initialize map when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeMap('map');
+            
+            // Start location sharing with a temporary user ID
+            // In a real app, this would come from your authentication system
+            const userId = 'user_' + Math.random().toString(36).substr(2, 9);
+            const watchId = startLocationSharing(userId);
+            
+            // Clean up when page is unloaded
+            window.addEventListener('beforeunload', () => {
+                stopLocationSharing(watchId);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Rapido</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .notifications-list {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .notification-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-item:hover {
+            background-color: #f8f8f8;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #e8f0fe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .notification-icon i {
+            color: #1a73e8;
+            font-size: 18px;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-message {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .notification-time {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .no-notifications {
+            padding: 30px;
+            text-align: center;
+            color: #666;
+        }
+
+        .back-button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #1557b0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Notifications</h1>
+            <button class="back-button" onclick="window.location.href='homepage.html'"><i class="fas fa-arrow-left"></i> Back</button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <div class="no-notifications" id="noNotifications">
+                <i class="fas fa-bell-slash"></i>
+                <p>No notifications yet</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let socket;
+
+        function initializeWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/ws`;
+            socket = new WebSocket(wsUrl);
+
+            socket.onopen = () => {
+                console.log('WebSocket connection established');
+            };
+
+            socket.onmessage = (event) => {
+                const notification = JSON.parse(event.data);
+                addNotification(notification);
+            };
+
+            socket.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
+
+            socket.onclose = () => {
+                console.log('WebSocket connection closed');
+                setTimeout(initializeWebSocket, 5000);
+            };
+        }
+
+        function addNotification(notification) {
+            const notificationsList = document.getElementById('notificationsList');
+            const noNotifications = document.getElementById('noNotifications');
+
+            // Hide the no notifications message if it's visible
+            if (noNotifications) {
+                noNotifications.style.display = 'none';
+            }
+
+            const notificationItem = document.createElement('div');
+            notificationItem.className = 'notification-item';
+
+            const icon = document.createElement('div');
+            icon.className = 'notification-icon';
+            icon.innerHTML = '<i class="fas fa-bell"></i>';
+
+            const content = document.createElement('div');
+            content.className = 'notification-content';
+
+            const message = document.createElement('div');
+            message.className = 'notification-message';
+            message.textContent = notification.message;
+
+            const time = document.createElement('div');
+            time.className = 'notification-time';
+            time.textContent = new Date().toLocaleTimeString();
+
+            content.appendChild(message);
+            content.appendChild(time);
+
+            notificationItem.appendChild(icon);
+            notificationItem.appendChild(content);
+
+            notificationsList.insertBefore(notificationItem, notificationsList.firstChild);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Initialize WebSocket connection
+            initializeWebSocket();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Sharing - Rapido</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        .user-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
+        }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn-accept {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-reject {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="user-info">
+        <h3>Ride Details</h3>
+        <p id="rideStatus">Connecting...</p>
+    </div>
+    <div id="notification" class="notification"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script type="module">
+        import { initializeMap, startLocationSharing, stopLocationSharing } from './location-tracker.js';
+
+        let map, hostMarker, riderMarker;
+        const urlParams = new URLSearchParams(window.location.search);
+        const rideId = urlParams.get('rideId');
+        const userId = localStorage.getItem('userId');
+        const isHost = urlParams.get('isHost') === 'true';
+
+        // TODO: Replace Firebase logic with backend API or WebSocket logic
+        // Example placeholder for backend/WebSocket integration:
+        // const socket = new WebSocket('wss://your-backend-url');
+        // Implement location sharing logic here
+
+        async function initializeLocationSharing() {
+            try {
+                // Initialize map
+                map = await initializeMap('map');
+                // Start sharing own location
+                await startLocationSharing(userId, rideId, isHost);
+                // TODO: Listen for location updates from backend/WebSocket
+                // TODO: Update ride status from backend/WebSocket
+            } catch (error) {
+                console.error('Error initializing location sharing:', error);
+                showNotification('Error initializing location sharing. Please try again.');
+            }
+        }
+
+        function handleLocationUpdate(location) {
+            // location should be an object with latitude, longitude, isHost
+            const marker = location.isHost ? hostMarker : riderMarker;
+            const markerColor = location.isHost ? 'blue' : 'green';
+
+            if (marker) {
+                marker.setLatLng([location.latitude, location.longitude]);
+            } else {
+                const newMarker = L.marker([location.latitude, location.longitude], {
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%;"></div>`,
+                        iconSize: [20, 20]
+                    })
+                }).addTo(map);
+
+                if (location.isHost) {
+                    hostMarker = newMarker;
+                    newMarker.bindPopup('Host');
+                } else {
+                    riderMarker = newMarker;
+                    newMarker.bindPopup('Rider');
+                }
+            }
+
+            // Center map to show both markers
+            if (hostMarker && riderMarker) {
+                const bounds = L.latLngBounds([hostMarker.getLatLng(), riderMarker.getLatLng()]);
+                map.fitBounds(bounds, { padding: [50, 50] });
+            }
+        }
+
+        function updateRideStatus(status) {
+            const statusElement = document.getElementById('rideStatus');
+            statusElement.textContent = `Status: ${status || 'Active'}`;
+        }
+
+        function showNotification(message, duration = 5000) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, duration);
+        }
+
+        // Clean up when page is unloaded
+        window.addEventListener('beforeunload', () => {
+            stopLocationSharing();
+            // TODO: Clean up backend/WebSocket listeners
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeLocationSharing);
+    </script>
+</body>
+</html>

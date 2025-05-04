@@ -1,0 +1,155 @@
+/* home.css */
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #60a5fa, #34d399);
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .navbar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+  }
+
+  .nav-user {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .nav-button {
+    background: transparent;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+  }
+
+  .nav-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .notification-badge {
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    margin-left: -0.5rem;
+  }
+
+  .notifications-panel,
+  .history-panel {
+    position: fixed;
+    top: 4rem;
+    right: 2rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 1rem;
+    display: none;
+  }
+
+  .notifications-panel.active,
+  .history-panel.active {
+    display: block;
+  }
+
+  .notification-item,
+  .history-item {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .history-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .tab-button {
+    background: transparent;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+  }
+
+  .tab-button.active {
+    border-bottom-color: #60a5fa;
+    color: #60a5fa;
+  }
+
+  .history-content {
+    display: none;
+  }
+
+  .history-content.active {
+    display: block;
+  }
+
+  .text-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    margin: 1rem;
+    border-radius: 9999px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  .button-host {
+    background-color: white;
+    color: #2563eb;
+  }
+  .button-host:hover {
+    background-color: #dbeafe;
+  }
+  
+  .button-join {
+    background-color: white;
+    color: #10b981;
+  }
+  .button-join:hover {
+    background-color: #d1fae5;
+  }
+  
